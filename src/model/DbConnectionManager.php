@@ -23,14 +23,6 @@ class DbConnectionManager
         $this->db = $this->connect();
 
         if (\mysqli_connect_errno()) {
-            \printf("Connect failed: %s\n", \mysqli_connect_error());
-            if (\strpos(\mysqli_connect_error(), "Unknown database") !== NULL) {
-                $this->install();
-            }
-            $this->db = $this->connect();
-        }
-
-        if (\mysqli_connect_errno()) {
             throw new \Exception(\sprintf("Connect failed: %s\n", \mysqli_connect_error()));
         }
     }
@@ -51,6 +43,4 @@ class DbConnectionManager
     {
         return $this->db;
     }
-
-
 }

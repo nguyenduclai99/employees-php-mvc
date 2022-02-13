@@ -26,13 +26,4 @@ class IndexView
         require "../src/views/{$this->controller}/{$this->action}.phtml";
         $this->content = \ob_get_clean();
     }
-
-
-    public function indexView()
-    {
-        $this->content = "Blog sample.
-        Click <a href ='/about'>here</a> to see";
-    }
-
-
 }
