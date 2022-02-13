@@ -1,9 +1,9 @@
 <?php
     $employee = !empty($variables) ? $variables[0] : [];
-    $action = "/?action=store";
+    $action = "index.php?action=store";
     $h1 = "Create Record";
     if ($_GET['action'] == "edit" && $_GET['id']) {
-        $action = "/?action=update&id=" . $_GET['id'];
+        $action = "index.php?action=update&id=" . $_GET['id'];
         $h1 = "Edit Record";
     }
 ?>
@@ -57,7 +57,7 @@
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Save</button>
-        <a href="/" class="btn btn-outline-secondary">Cancel</a>
+        <a href="index.php" class="btn btn-outline-secondary">Cancel</a>
     </form>
 </div>
 

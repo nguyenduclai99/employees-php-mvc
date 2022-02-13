@@ -35,8 +35,8 @@ switch ($routeAction) {
         break;
 }
 require './../src/views/IndexView.php';
-require '../src/Controller/ControllerInterface.php';
-require '../src/Controller/' . $controllerName . '.php';
+require '../src/controller/ControllerInterface.php';
+require '../src/controller/' . $controllerName . '.php';
 require '../src/model/Employees.php';
 require '../src/model/DbConnectionManager.php';
 

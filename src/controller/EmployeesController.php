@@ -34,9 +34,9 @@ class EmployeesController implements ControllerInterface
     public function store($request)
     {
         $store = $this->employees->create($request);
-        $action = "/?success=true";
+        $action = "index.php?success=true";
         if (!$store) {
-            $action = "/?success=false";
+            $action = "index.php?success=false";
         }
         $this->redirectAction($action);
     }
@@ -44,9 +44,9 @@ class EmployeesController implements ControllerInterface
     public function update($request)
     {
         $update = $this->employees->update($request);
-        $action = "/?success=true&action=updateEmployees";
+        $action = "index.php?success=true&action=updateEmployees";
         if (!$update) {
-            $action = "/?success=false&action=updateEmployees";
+            $action = "index.php?success=false&action=updateEmployees";
         }
         $this->redirectAction($action);
     }
@@ -54,17 +54,17 @@ class EmployeesController implements ControllerInterface
     public function delete($request) 
     {
         if (empty($request['id'])) {
-            $this->redirectAction('/?success=false&action=deleteEmployees');
+            $this->redirectAction('index.php?success=false&action=deleteEmployees');
         }
 
         $delete = $this->employees->delete($request['id']);
-        $this->redirectAction('/?success=true&action=deleteEmployees');
+        $this->redirectAction('index.php?success=true&action=deleteEmployees');
     }
 
     public function detail($request)
     {
         if (empty($request['id'])) {
-            $this->redirectAction('/?success=false&action=detail&detailEmployees');
+            $this->redirectAction('index.php?success=false&action=detail&detailEmployees');
         }
         $where = "id=" . $request['id'];
 
