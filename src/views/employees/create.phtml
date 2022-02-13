@@ -1,0 +1,83 @@
+<?php
+    $employee = !empty($variables) ? $variables[0] : [];
+    $action = "/?action=store";
+    $h1 = "Create Record";
+    if ($_GET['action'] == "edit" && $_GET['id']) {
+        $action = "/?action=update&id=" . $_GET['id'];
+        $h1 = "Edit Record";
+    }
+?>
+<?php if (empty($employee) && $_GET['action'] == "edit") { ?>
+    <div class="alert alert-danger" role="alert">
+        Không tồn tại nhân viên có id là <?= $_GET['id'] ?>
+    </div>
+<?php } ?>
+<h1><?= $h1 ?></h1>
+<div class="row">
+    <form class="col-6" action="<?= $action ?>" id="store" method="POST">
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label>Name <span style="color:#ff0000">*</span></label>
+                <input type="text" class="form-control" value="<?php echo !empty($employee->name) ? $employee->name : "" ?>" name="name">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label>Description</label>
+                <textarea class="form-control" name="description" placeholder="Description"><?php echo !empty($employee->description) ? $employee->description : "" ?></textarea>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label>Salary</label>
+                <input type="number" class="form-control" value="<?php echo !empty($employee->salary) ? $employee->salary : "" ?>" name="salary">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label>Gender</label> <br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" value="0" <?php echo !empty($employee) && is_numeric($employee->gender) &&  $employee->gender == 0 ? "checked" : "checked" ?>>
+                    <label class="form-check-label">
+                        Male
+                    </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" value="1" <?php echo !empty($employee) && is_numeric($employee->gender) &&  $employee->gender == 1 ? "checked" : "" ?>>
+                    <label class="form-check-label">
+                        Female
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label>Birthday</label>
+                <input type="date" class="form-control" value="<?php echo !empty($employee->birthday) ? date('Y-m-d',strtotime($employee->birthday)) : "" ?>" name="birthday">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="/" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>
+
+<script>
+    $().ready(function() {
+        $("#store").validate({
+            onfocusout: false,
+            onkeyup: false,
+            onclick: false,
+            rules: {
+                "name": {
+                    required: true,
+                    maxlength: 15
+                },
+            },
+            messages: {
+                "name": {
+                    required: "Name không được để trống",
+                }
+            }
+        });
+    });
+</script>

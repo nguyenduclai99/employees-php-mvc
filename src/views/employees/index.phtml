@@ -1,0 +1,86 @@
+<h1>Employees List</h1>
+<div class="row">
+    <?php
+        $employees = isset($variables) ? $variables : [];
+        $message = "";
+        $type = "success";
+        if (!empty($_GET['success']) && $_GET['success'] == "false") {
+            $message = "Thêm mới nhân viên thất bại";
+            $type = "error";
+        } elseif (!empty($_GET['success']) && $_GET['success'] == "false" && !empty($_GET['action']) &&  $_GET['action'] == "updateEmployees") {
+            $message = "Cập nhật nhân viên thất bại";
+            $type = "error";
+        } elseif (!empty($_GET['success']) && $_GET['success'] == "true" && !empty($_GET['action']) && $_GET['action'] == "updateEmployees") {
+            $message = "Cập nhật nhân viên thành công";
+        } elseif (!empty($_GET['success']) && $_GET['success'] == "false" && !empty($_GET['action']) &&  $_GET['action'] == "detailEmployees") {
+            $message = "Id null";
+            $type = "error";
+        } elseif (!empty($_GET['success']) && $_GET['success'] == "true" && !empty($_GET['action']) &&  $_GET['action'] == "deleteEmployees") {
+            $message = "Xóa nhân viên thành công";
+        } elseif (!empty($_GET['success']) && $_GET['success'] == "false" && !empty($_GET['action']) &&  $_GET['action'] == "deleteEmployees") {
+            $message = "Xóa nhân viên thất bại";
+            $type = "error";
+        } elseif (!empty($_GET['success']) && $_GET['success'] == "true") {
+            $message = "Thêm mới nhân viên thành công";
+        } 
+    ?>
+    
+    <div class="col-12">
+        <?php if ($type == "success" && !empty($message)) { ?>
+            <div class="alert alert-success" role="alert">
+                <?= $message ?>
+            </div>
+        <?php } elseif (!empty($message)) { ?>
+            <div class="alert alert-danger" role="alert">
+                <?= $message ?>
+            </div>
+        <?php } ?>
+    <a href="/?action=create" class="btn btn-success float-right mb-20">+ Add New Employees</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Salary</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Birthday</th>
+                    <th scope="col">Created_at</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($employees as $key => $employee) {?>
+                    <tr>
+                        <th scope="row"><?php echo $key + 1 ?></th>
+                        <td><?= $employee->name ?></td>
+                        <td><?= $employee->description ?></td>
+                        <td><?= number_format($employee->salary) ?> VNĐ</td>
+                        <td><?php echo $employee->gender == 1 ? "Female" : "Male" ?></td>
+                        <td><?= $employee->birthday ?></td>
+                        <td><?= $employee->created_at ?></td>
+                        <td>
+                            <a href="/?action=detail&id=<?= $employee->id ?>" class="mr-10">
+                                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </a>
+                            <a href="/?action=edit&id=<?= $employee->id ?>" class="mr-10">
+                                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </a>
+                            <a class="mr-10" onclick="confirmDelete()">
+                                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                            </a>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    function confirmDelete(){
+        var confirm = window.confirm("Are you sure delete?");
+        if (confirm) {
+            window.location.href = "/?action=delete&id=<?= $employee->id ?>"
+        } 
+    }
+</script>
